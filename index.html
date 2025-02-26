@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algebra Memory Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Algebra Memory Game</h1>
+    <p>Solve the equation, enter the answer, and find the matching card.</p>
+
+    <div class="solving-box">
+        <input type="text" id="answerInput" placeholder="Enter your answer">
+        <button onclick="checkAnswer()">Submit</button>
+        <p id="feedback"></p>
+    </div>
+
+    <div class="game-container" id="gameBoard"></div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
