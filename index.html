@@ -8,16 +8,41 @@
 </head>
 <body>
 
-    <h1>Algebra Memory Game</h1>
-    <p>Solve the equation, enter the answer, and find the matching card.</p>
-
-    <div class="solving-box">
-        <input type="text" id="answerInput" placeholder="Enter your answer">
-        <button onclick="checkAnswer()">Submit</button>
-        <p id="feedback"></p>
+    <div id="roleSelection">
+        <h2>Are you a teacher or a student?</h2>
+        <button onclick="selectRole('teacher')">Teacher</button>
+        <button onclick="selectRole('student')">Student</button>
     </div>
 
-    <div class="game-container" id="gameBoard"></div>
+    <div id="teacherSetup" class="hidden">
+        <h2>Teacher Setup</h2>
+        <input type="text" id="teacherName" placeholder="Enter your name">
+        <input type="text" id="className" placeholder="Enter class name">
+        <button onclick="createClass()">Create Class</button>
+    </div>
+
+    <div id="studentSetup" class="hidden">
+        <h2>Student Login</h2>
+        <input type="text" id="studentName" placeholder="Enter your name">
+        <select id="classList"></select>
+        <button onclick="joinClass()">Join Class</button>
+    </div>
+
+    <div id="gameArea" class="hidden">
+        <h1>Algebra Memory Game</h1>
+        <p id="gameInfo"></p>
+
+        <div class="solving-box">
+            <input type="text" id="answerInput" placeholder="Enter your answer">
+            <button onclick="checkAnswer()">Submit</button>
+            <p id="feedback"></p>
+        </div>
+
+        <div class="game-container" id="gameBoard"></div>
+
+        <h2>Results</h2>
+        <div id="results"></div>
+    </div>
 
     <script src="app.js"></script>
 
