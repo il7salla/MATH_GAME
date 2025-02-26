@@ -1,8 +1,92 @@
 document.addEventListener("DOMContentLoaded", () => {
     const gameBoard = document.getElementById("gameBoard");
-    let selectedEquation = null;
+    const roleSelection = document.getElementById("roleSelection");
+    const teacherSetup = document.getElementById("teacherSetup");
+    const studentSetup = document.getElementById("studentSetup");
+    const gameArea = document.getElementById("gameArea");
+    const classList = document.getElementById("classList");
+    const resultsDiv = document.getElementById("results");
 
-    // Generate random algebraic expressions
+    let selectedEquation = null;
+    let currentStudent = null;
+    let currentClass = null;
+
+    let classes = JSON.parse(localStorage.getItem("classes")) || {}; 
+
+    function selectRole(role) {
+        roleSelection.classList.add("hidden");
+        if (role === "teacher") teacherSetup.classList.remove("hidden");
+        else {
+            studentSetup.classList.remove("hidden");
+            loadClasses();
+        }
+    }
+
+    function createClass() {
+        let teacherName = document.getElementById("teacherName").value.trim();
+        let className = document.getElementById("className").value.trim();
+
+        if (teacherName === "" || className === "") {
+            alert("Please enter a name and class name.");
+            return;
+        }
+
+        if (!classes[className]) {
+            classes[className] = { teacher: teacherName, students: [] };
+            localStorage.setItem("classes", JSON.stringify(classes));
+        }
+
+        alert(`Class ${className} created by ${teacherName}!`);
+        teacherSetup.classList.add("hidden");
+        roleSelection.classList.remove("hidden");
+    }
+
+    function loadClasses() {
+        classList.innerHTML = "";
+        Object.keys(classes).forEach(className => {
+            let option = document.createElement("option");
+            option.value = className;
+            option.innerText = className;
+            classList.appendChild(option);
+        });
+    }
+
+    function joinClass() {
+        let studentName = document.getElementById("studentName").value.trim();
+        let selectedClass = classList.value;
+
+        if (studentName === "") {
+            alert("Please enter your name.");
+            return;
+        }
+
+        currentStudent = studentName;
+        currentClass = selectedClass;
+
+        classes[selectedClass].students.push({ name: studentName, correct: 0, wrong: 0 });
+        localStorage.setItem("classes", JSON.stringify(classes));
+
+        studentSetup.classList.add("hidden");
+        startGame();
+    }
+
+    function startGame() {
+        gameArea.classList.remove("hidden");
+        document.getElementById("gameInfo").innerText = `Welcome, ${currentStudent}! Playing in class: ${currentClass}`;
+
+        let equations = [];
+        let cards = [];
+        for (let i = 0; i < 6; i++) {
+            let eq = generateEquation();
+            equations.push(eq);
+            cards.push({ type: "equation", value: eq.equation });
+            cards.push({ type: "answer", value: eq.answer });
+        }
+        cards = cards.sort(() => Math.random() - 0.5);
+
+        renderBoard(cards);
+    }
+
     function generateEquation() {
         let a = Math.floor(Math.random() * 15) - 7;
         let b = Math.floor(Math.random() * 15) - 7;
@@ -15,19 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
-    // Create shuffled game cards
-    let equations = [];
-    let cards = [];
-    for (let i = 0; i < 6; i++) {
-        let eq = generateEquation();
-        equations.push(eq);
-        cards.push({ type: "equation", value: eq.equation });
-        cards.push({ type: "answer", value: eq.answer });
-    }
-    cards = cards.sort(() => Math.random() - 0.5);
-
-    // Render game board
-    function renderBoard() {
+    function renderBoard(cards) {
         gameBoard.innerHTML = "";
         cards.forEach((card, index) => {
             let div = document.createElement("div");
@@ -42,45 +114,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function flipCard(card) {
-        if (card.classList.contains("hidden")) return;
         card.innerText = card.dataset.value;
-
-        if (selectedEquation === null && card.dataset.type === "equation") {
-            selectedEquation = card;
-            document.getElementById("answerInput").focus();
-        } else if (selectedEquation !== null && card.dataset.type === "answer") {
-            if (card.dataset.value === selectedEquation.dataset.value) {
-                selectedEquation.classList.add("hidden");
-                card.classList.add("hidden");
-                selectedEquation = null;
-                document.getElementById("feedback").innerText = "Correct! Match found.";
-            } else {
-                setTimeout(() => {
-                    selectedEquation.innerText = "Click to Flip";
-                    card.innerText = "Click to Flip";
-                    selectedEquation = null;
-                }, 1000);
-                document.getElementById("feedback").innerText = "Wrong match, try again!";
-            }
-        }
+        selectedEquation = card;
     }
 
     function checkAnswer() {
         let userAnswer = document.getElementById("answerInput").value.trim();
-        if (!selectedEquation) {
-            document.getElementById("feedback").innerText = "Click an equation card first!";
-            return;
-        }
         if (userAnswer === selectedEquation.dataset.value) {
-            document.getElementById("feedback").innerText = "Correct! Now find the matching card.";
+            updateScore(true);
         } else {
-            document.getElementById("feedback").innerText = "Wrong answer! Try again.";
+            updateScore(false);
         }
     }
 
-    // Render the board on page load
-    renderBoard();
+    function updateScore(correct) {
+        let student = classes[currentClass].students.find(s => s.name === currentStudent);
+        correct ? student.correct++ : student.wrong++;
+        localStorage.setItem("classes", JSON.stringify(classes));
+        displayResults();
+    }
 
-    // Attach checkAnswer to global scope so the button works
+    function displayResults() {
+        resultsDiv.innerHTML = JSON.stringify(classes, null, 2);
+    }
+
+    window.selectRole = selectRole;
+    window.createClass = createClass;
+    window.joinClass = joinClass;
     window.checkAnswer = checkAnswer;
 });
