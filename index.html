@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Algebra Memory Game</title>
-    <link rel="stylesheet" href="style.css"> <!-- We'll add styling later -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
+        <!-- User Type Selection -->
+        <div id="user-selection">
+            <h2>Are you a Teacher or a Student?</h2>
+            <button id="teacher-button">Teacher</button>
+            <button id="student-button">Student</button>
+        </div>
+
         <!-- Teacher Mode -->
-        <div id="teacher-mode" class="mode">
+        <div id="teacher-mode" class="mode hidden">
             <h2>Teacher Mode</h2>
             <label for="teacher-name">Teacher Name:</label>
             <input type="text" id="teacher-name" placeholder="Enter Teacher's Name" required>
