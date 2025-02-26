@@ -4,47 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Algebra Memory Game</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> <!-- We'll add styling later -->
 </head>
 <body>
-
-    <div id="roleSelection">
-        <h2>Are you a teacher or a student?</h2>
-        <button onclick="selectRole('teacher')">Teacher</button>
-        <button onclick="selectRole('student')">Student</button>
-    </div>
-
-    <div id="teacherSetup" class="hidden">
-        <h2>Teacher Setup</h2>
-        <input type="text" id="teacherName" placeholder="Enter your name">
-        <input type="text" id="className" placeholder="Enter class name">
-        <button onclick="createClass()">Create Class</button>
-    </div>
-
-    <div id="studentSetup" class="hidden">
-        <h2>Student Login</h2>
-        <input type="text" id="studentName" placeholder="Enter your name">
-        <select id="classList"></select>
-        <button onclick="joinClass()">Join Class</button>
-    </div>
-
-    <div id="gameArea" class="hidden">
-        <h1>Algebra Memory Game</h1>
-        <p id="gameInfo"></p>
-
-        <div class="solving-box">
-            <input type="text" id="answerInput" placeholder="Enter your answer">
-            <button onclick="checkAnswer()">Submit</button>
-            <p id="feedback"></p>
+    <div id="app">
+        <!-- Teacher Mode -->
+        <div id="teacher-mode" class="mode">
+            <h2>Teacher Mode</h2>
+            <label for="teacher-name">Teacher Name:</label>
+            <input type="text" id="teacher-name" placeholder="Enter Teacher's Name" required>
+            <label for="class-name">Class Name:</label>
+            <input type="text" id="class-name" placeholder="Enter Class Name" required>
+            <button id="start-teacher">Start Teaching</button>
+            <div id="teacher-dashboard" class="hidden">
+                <h3>Student Results</h3>
+                <ul id="student-list"></ul>
+            </div>
         </div>
 
-        <div class="game-container" id="gameBoard"></div>
+        <!-- Student Mode -->
+        <div id="student-mode" class="mode hidden">
+            <h2>Student Mode</h2>
+            <label for="student-name">Student Name:</label>
+            <input type="text" id="student-name" placeholder="Enter Your Name" required>
+            <label for="select-class">Select Class:</label>
+            <select id="select-class">
+                <!-- Class options will be populated dynamically -->
+            </select>
+            <button id="start-student">Start Game</button>
+            <div id="student-timer"></div>
+            <div id="student-score"></div>
+        </div>
 
-        <h2>Results</h2>
-        <div id="results"></div>
+        <!-- Timer -->
+        <div id="timer" class="hidden">
+            <p id="time-left">Time Left: 00:00</p>
+        </div>
     </div>
-
+    
     <script src="app.js"></script>
-
 </body>
 </html>
