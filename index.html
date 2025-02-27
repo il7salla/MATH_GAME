@@ -1,54 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Algebra Memory Game</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div id="app">
-        <!-- User Type Selection -->
-        <div id="user-selection">
-            <h2>Are you a Teacher or a Student?</h2>
-            <button id="teacher-button">Teacher</button>
-            <button id="student-button">Student</button>
-        </div>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #d8f3dc;
+}
 
-        <!-- Teacher Mode -->
-        <div id="teacher-mode" class="mode hidden">
-            <h2>Teacher Mode</h2>
-            <label for="teacher-name">Teacher Name:</label>
-            <input type="text" id="teacher-name" placeholder="Enter Teacher's Name" required>
-            <label for="class-name">Class Name:</label>
-            <input type="text" id="class-name" placeholder="Enter Class Name" required>
-            <button id="start-teacher">Start Teaching</button>
-            <div id="teacher-dashboard" class="hidden">
-                <h3>Student Results</h3>
-                <ul id="student-list"></ul>
-            </div>
-        </div>
+.hidden {
+    display: none;
+}
 
-        <!-- Student Mode -->
-        <div id="student-mode" class="mode hidden">
-            <h2>Student Mode</h2>
-            <label for="student-name">Student Name:</label>
-            <input type="text" id="student-name" placeholder="Enter Your Name" required>
-            <label for="select-class">Select Class:</label>
-            <select id="select-class">
-                <!-- Class options will be populated dynamically -->
-            </select>
-            <button id="start-student">Start Game</button>
-            <div id="student-timer"></div>
-            <div id="student-score"></div>
-        </div>
+button {
+    background: #2a9d8f;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    margin: 5px;
+    cursor: pointer;
+}
 
-        <!-- Timer -->
-        <div id="timer" class="hidden">
-            <p id="time-left">Time Left: 00:00</p>
-        </div>
-    </div>
-    
-    <script src="app.js"></script>
-</body>
-</html>
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.card {
+    width: 100px;
+    height: 100px;
+    background: white;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.card.flipped {
+    background: lightblue;
+}
