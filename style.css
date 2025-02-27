@@ -1,9 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
+    background: #d8f3dc;
 }
 
 .hidden {
@@ -11,42 +9,34 @@ body {
 }
 
 button {
+    background: #2a9d8f;
+    color: white;
     padding: 10px 20px;
-    font-size: 16px;
+    border: none;
     margin: 5px;
     cursor: pointer;
 }
 
-input, select {
-    padding: 8px;
-    font-size: 16px;
-}
-
-.game-container {
+.grid {
     display: grid;
-    grid-template-columns: repeat(4, 150px);
-    gap: 15px;
+    grid-template-columns: repeat(4, 100px);
+    gap: 10px;
     justify-content: center;
     margin-top: 20px;
 }
 
 .card {
-    width: 140px;
+    width: 100px;
     height: 100px;
+    background: white;
     border: 2px solid black;
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 18px;
+    align-items: center;
     cursor: pointer;
-    background-color: lightgray;
-    transition: background-color 0.3s;
+    transition: 0.5s;
 }
 
-.card:hover {
-    background-color: #ddd;
-}
-
-.hidden {
-    visibility: hidden;
+.card.flipped {
+    background: lightblue;
 }
