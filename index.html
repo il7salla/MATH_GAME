@@ -1,42 +1,58 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: #d8f3dc;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algebraic Memory Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-.hidden {
-    display: none;
-}
+    <!-- Landing Page -->
+    <div id="landing">
+        <h1>ALGEBRAIC MEMORY GAME</h1>
+        <button onclick="showTeacherForm()">Teacher</button>
+        <button onclick="showStudentForm()">Student</button>
+    </div>
 
-button {
-    background: #2a9d8f;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    margin: 5px;
-    cursor: pointer;
-}
+    <!-- Teacher Form -->
+    <div id="teacher-form" class="hidden">
+        <h2>Teacher</h2>
+        <input type="text" id="teacher-name" placeholder="Enter Name">
+        <input type="text" id="class-name" placeholder="Enter Class Name">
+        <label><input type="checkbox" id="enable-timer"> Add Timer</label>
+        <button onclick="startTeacher()">Start</button>
+    </div>
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(4, 100px);
-    gap: 10px;
-    justify-content: center;
-    margin-top: 20px;
-}
+    <!-- Student Form -->
+    <div id="student-form" class="hidden">
+        <h2>Student</h2>
+        <input type="text" id="student-name" placeholder="Enter Name">
+        <select id="class-list"></select>
+        <button onclick="startStudent()">Join</button>
+    </div>
 
-.card {
-    width: 100px;
-    height: 100px;
-    background: white;
-    border: 2px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: 0.5s;
-}
+    <!-- Teacher Dashboard -->
+    <div id="teacher-dashboard" class="hidden">
+        <h2>Student Work</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Score</th>
+                <th>Time</th>
+                <th>Result</th>
+            </tr>
+            <tbody id="student-data"></tbody>
+        </table>
+    </div>
 
-.card.flipped {
-    background: lightblue;
-}
+    <!-- Memory Game -->
+    <div id="game" class="hidden">
+        <h2 id="game-title"></h2>
+        <p id="timer"></p>
+        <div class="grid" id="card-grid"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
